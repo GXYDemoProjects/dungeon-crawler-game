@@ -1,0 +1,1 @@
+A project for [FreeCodeCampus challenges](https://www.freecodecamp.org/challenges/build-a-recipe-box).
