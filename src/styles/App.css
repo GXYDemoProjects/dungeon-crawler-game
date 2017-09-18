@@ -2,16 +2,3 @@
   margin-top: 50px;
 }
 
-#myModal {
-  display: block;
-  background: rgba(13, 13, 13, 0.65);;
-}
-
-.panel-title>a {
-  cursor: pointer;
-}
-
-.panel button.btn-danger {
-  margin-right: 20px;
-}
-
