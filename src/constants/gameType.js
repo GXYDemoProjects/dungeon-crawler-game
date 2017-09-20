@@ -1,2 +1,7 @@
 // Action constants
-export const CREATE_MAP = 'CREATE_MAP';
+export const SET_MAP = 'SET_MAP';
+
+export const tileType = {
+  WALL: 0,
+  FLOOR: 1
+};
