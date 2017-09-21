@@ -2,6 +2,10 @@
 export const SET_MAP = 'SET_MAP';
 export const SET_LOCATION = 'SET_LOCATION';
 export const ADD_ENTITY = 'ADD_ENTITY';
+export const TOGGLE_DARKNESS= 'TOGGLE_DARKNESS';
+
+
+export const SIGHT = 3; 
 
 export const entityType = {
   PLAYER: 2,
@@ -21,6 +25,7 @@ export const tileType = {
   DOOR: 5,
   ENEMY: 6,
   BOSS: 7,
+  DARK: 8
 };
 
 export const weaponTypes = [

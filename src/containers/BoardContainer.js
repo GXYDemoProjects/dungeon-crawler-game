@@ -95,9 +95,9 @@ class BoardContainer extends React.Component {
     return coord;
   }
   visibleBoard() {
-    const {map, occupiedSpaces, entities, width, height} = this.props;
-    let startX = Math.floor(entities.player.x - height / 2);
-    let startY = Math.floor(entities.player.y - width / 2);
+    const {map, occupiedSpaces, player, width, height, darkness} = this.props;
+    let startX = Math.floor(player.x - height / 2);
+    let startY = Math.floor(player.y - width / 2);
     startX = startX < 0 ? 0 : startX;
     startY = startY < 0 ? 0 : startX;
     let endX = startX + height;
@@ -114,10 +114,14 @@ class BoardContainer extends React.Component {
     for (let i = startX; i < endX; i += 1) {
       visibleBoard.push([]);
       for (let j = startY; j < endY; j += 1) {
-        const entity = occupiedSpaces[`${i}x${j}`];
-        visibleBoard[i - startX][j - startY] = (entity === undefined
-          ? map[i][j]
-          : entity);
+        if(darkness && (Math.abs(i-player.x) > gameType.SIGHT || Math.abs(j-player.y) > gameType.SIGHT)) {
+          visibleBoard[i - startX][j - startY] = gameType.tileType.DARK;
+        } else {
+          const entity = occupiedSpaces[`${i}x${j}`];
+          visibleBoard[i - startX][j - startY] = (entity === undefined
+            ? map[i][j]
+            : entity);
+        }
       }
     }
     return visibleBoard;
@@ -156,10 +160,11 @@ const mapStateToProps = (state) => {
   return ({
     map: state.map,
     occupiedSpaces: getOccupiedSpaces(state),
-    entities: state.entities,
+    player: state.entities.player,
     width: state.width,
     height: state.height,
-    level: state.level
+    level: state.level,
+    darkness: state.darkness
   });
 };
 

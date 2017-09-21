@@ -27,7 +27,7 @@ const initState = {
   level: 0,
   width: 48,
   height: 20,
-  darkness: true,
+  darkness: false,
 };
 
 const store = createStore(reducer, initState,

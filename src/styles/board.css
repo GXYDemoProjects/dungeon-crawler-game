@@ -56,6 +56,9 @@
 .boss:after {
   background: url('../images/sprite_marker.png') -100px -50px;  
 }
+.dark {
+  opacity: 0.2;
+}
 .footer {
   padding-top: 20px;
   clear: both;

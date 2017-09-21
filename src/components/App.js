@@ -1,14 +1,18 @@
 import React from 'react';
-import StatusBar from './StatusBar';
+import GithubCorner from 'react-github-corner';
+import StatusContainer from '../containers/StatusContainer';
 import BoardContainer from '../containers/BoardContainer';
-import Footer from './Footer';
-
+import '../styles/App.css';
 
 const App = () => (
   <div className="Main">
-    <StatusBar />
+    <GithubCorner 
+      href="https://github.com/GuoXiaoyang/DungeonCrawlerGame"
+      bannerColor="#61ba74"
+      octoColor="#272727"
+    />
+    <StatusContainer />
     <BoardContainer />
-    <Footer />
   </div>
 );
 

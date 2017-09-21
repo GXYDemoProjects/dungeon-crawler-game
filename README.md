@@ -3,9 +3,9 @@ A project for [FreeCodeCampus challenges](https://www.freecodecamp.org/challenge
 TODO List
 - [x] Add random map
 - [x] Add NPC and player
-- [ ] Add darkness
+- [x] Add darkness
 - [ ] Player move
-- [ ] Add status bar
+- [x] Add status bar
 - [ ] Update status bar
 - [ ] Level up
 - [ ] Add notification

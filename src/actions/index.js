@@ -17,3 +17,8 @@ export const addEntity = (entity, location) => ({
   entity,
   location
 });
+
+
+export const toggleDarkness = () => ({
+  type: gameType.TOGGLE_DARKNESS
+});

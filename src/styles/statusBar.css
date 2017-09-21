@@ -1,0 +1,44 @@
+.status {
+  width: 1200px;
+  box-sizing: border-box;
+  padding: 0px 70px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.status>div {
+  flex: 1 1 300px;
+}
+.player-status, .game-status {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.image-wrapper {
+  margin-right: 30px;
+  display: inline-block;
+}
+.info {
+  margin: 10px 0;
+  background: #61ba74;
+  border-radius: 4px;
+}
+.info table td {
+  padding: 5px;
+}
+
+button.button {
+  cursor: pointer;
+  border: none;
+  background: #61ba74;
+  margin: 10px 0;
+  width: 120px;
+  height: 30px;
+  border-radius: 2px;
+}
+button.button:hover {
+  background: #7ef682;
+}

@@ -28,7 +28,10 @@ const Square = ({ value, posX, posY}) => {
       break;
     case tileType.BOSS:
       tileClass += 'floor boss';
-      break;            
+      break;      
+    case tileType.DARK:
+      tileClass += 'floor dark';
+      break;        
     default:
       break;
   }
