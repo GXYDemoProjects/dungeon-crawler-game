@@ -1,0 +1,62 @@
+.board {
+  margin: 20px auto;
+  padding: 10px;
+  width: 1200px;
+  /* width: 1000px; */
+  
+}
+.board-row {
+  width: 100%;
+}
+.tile {
+  float: left;
+  width: 25px;
+  height: 25px;
+  
+  /* background: url('../images/rpg_maker.png') */
+}
+.wall {
+  /* background: #D3C99B; */
+  background: url('../images/wall.png');
+}
+
+.floor {
+  /* background: #23B966; */
+  background: url('../images/floor.png');
+}
+.player, .weapon, .door, .boss, .energy, .enemy {
+  position: relative;
+}
+
+.player:after, .weapon:after, .door:after, .boss:after, .energy:after, .enemy:after, .boss:after {
+  content: "";
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  top: 0;
+  left: 0;
+}
+
+.player:after {
+  /* background: #2416E6; */
+  background: url('../images/sprite_marker.png') 0 0;  
+}
+.weapon:after {
+  background: url('../images/sprite_marker.png') -125px -25px;  
+}
+.energy:after {
+  background: url('../images/sprite_marker.png') -125px 0;  
+}
+.door:after {
+  background: url('../images/sprite_marker.png') -100px -25px;  
+}
+.enemy:after {
+  background: url('../images/sprite_marker.png') -100px 0;  
+}
+.boss:after {
+  background: url('../images/sprite_marker.png') -100px -50px;  
+}
+.footer {
+  padding-top: 20px;
+  clear: both;
+}
