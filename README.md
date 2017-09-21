@@ -2,7 +2,7 @@ A project for [FreeCodeCampus challenges](https://www.freecodecamp.org/challenge
 
 TODO List
 - [x] Add random map
-- [ ] Add NPC and player
+- [x] Add NPC and player
 - [ ] Add darkness
 - [ ] Player move
 - [ ] Add status bar
