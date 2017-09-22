@@ -6,17 +6,17 @@ import '../styles/statusBar.css';
 
 
 const StatusBar = (props) => {
-  const { player, game } = props;
+  const { player, game, restartGame, toggleDarkness } = props;
   return (
     <div className="status">
       <PlayerStat player={player}/>
       <GameStat game={game}/>
       <div>
         <div>
-          <button className="button">Toggle Darkness</button>
+          <button className="button" onClick={toggleDarkness}>Toggle Darkness</button>
         </div>
         <div>
-          <button className="button">Restart Game</button>
+          <button className="button" onClick={restartGame}>Restart Game</button>
         </div>       
       </div>
     </div>

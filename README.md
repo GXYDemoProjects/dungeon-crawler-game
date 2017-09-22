@@ -10,5 +10,3 @@ TODO List
 - [ ] Level up
 - [ ] Add notification
 - [ ] Add sound effect
-- [ ] Add move animation
-- [ ] Add test

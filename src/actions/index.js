@@ -6,9 +6,9 @@ export const setMap = (map) => ({
   map
 });
 
-export const setLocation = (entity, location) => ({
+export const setLocation = (entityName, location) => ({
   type: gameType.SET_LOCATION,
-  entityName: entity,
+  entityName,
   location
 });
 
@@ -17,8 +17,67 @@ export const addEntity = (entity, location) => ({
   entity,
   location
 });
-
-
+export const removeEntity = (entity, location) => ({
+  type: gameType.REMOVE_ENTITY,
+  entity
+});
+export const initEntity = (initState) => ({
+  type: gameType.INIT_ENTITY,
+  initState
+});
 export const toggleDarkness = () => ({
   type: gameType.TOGGLE_DARKNESS
+});
+
+export const move = (entityName, vector) => ({
+  type: gameType.MOVE,
+  entityName,
+  vector
+});
+
+export const switchWeapon = (weapon, attack) => ({
+  type: gameType.SWITCH_WEAPON,
+  weapon,
+  attack
+});
+
+export const resetBoard = () => ({
+  type: gameType.RESET_BOARD
+});
+
+export const increaseLevel = () => ({
+  type: gameType.INCREASE_LEVEL
+});
+
+export const damage = (entityName, health) => ({
+  type: gameType.DAMAGE,
+  entityName,
+  health
+});
+
+export const heal = (entityName, health) => ({
+  type: gameType.HEAL,
+  entityName,
+  health
+});
+
+export const resetLevel = () => ({
+  type: gameType.RESET_LEVEL
+});
+
+export const gainXp = (xp) => ({
+  type: gameType.GAIN_XP,
+  xp
+});
+
+export const levelUp = (attack, health, toNextLevel) => ({
+  type: gameType.LEVEL_UP,
+  attack,
+  health,
+  toNextLevel
+});
+
+export const resetMap = (map) => ({
+  type: gameType.RESET_MAP,
+  map
 });
