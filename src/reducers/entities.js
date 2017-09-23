@@ -27,7 +27,6 @@ const entities = (state = {}, action) => {
     case gameType.INIT_ENTITY:
       return action.initState;
     case gameType.DAMAGE:
-      console.log('action.entityName:',action.entityName,'health:',state[action.entityName].health - action.health);
       return {
         ...state,
         [action.entityName]: {
@@ -36,7 +35,6 @@ const entities = (state = {}, action) => {
         }
       };
     case gameType.HEAL:
-      console.log('action.entityName:',action.entityName,'health:',state[action.entityName].health + action.health);
       return {
         ...state,
         [action.entityName]: {
@@ -50,7 +48,7 @@ const entities = (state = {}, action) => {
         player: {
           ...state.player,
           weapon: action.weapon,
-          attack: action.attack
+          attack: state.player.attack + action.attack
         }
       }
     case gameType.MOVE:

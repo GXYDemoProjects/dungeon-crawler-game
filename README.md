@@ -1,4 +1,6 @@
 A project for [FreeCodeCampus challenges](https://www.freecodecamp.org/challenges/build-a-roguelike-dungeon-crawler-game).
+[Demo](https://guoxiaoyang.github.io/DungeonCrawlerGame/)
+
 
 TODO List
 - [x] Add random map

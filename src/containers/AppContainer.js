@@ -55,7 +55,7 @@ class AppContainer extends React.Component {
   }
 
   render() {
-    console.log('render!'); 
+    // console.log('render!'); 
     const { visibleBoard, entities, toggleDarkness, game, setupGame, level} = this.props;
     const player = entities.player;
     game.level = level;
@@ -177,7 +177,7 @@ const fillMap = (dispatch, getState) => {
   dispatch(actionCreators.addEntity(weapon, getEmptyCoords(getState)));
   // Place heath and enemies
   const NUM_THINGS = 5,
-        HEALTH_VAL = 20,
+        HEALTH_VAL = 30,
         LEVEL_MULT = level + 1;
   for (let i = 0; i < NUM_THINGS; i++) {
     const energyEntity = {
