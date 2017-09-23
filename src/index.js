@@ -5,11 +5,9 @@ import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import AppContainer from './containers/AppContainer';
 import reducer from './reducers';
-import Map from './unit/mapCreator';
 import { entityType } from './constants/gameType';
 import registerServiceWorker from './registerServiceWorker';
 
-const MapCreator = new Map();
 
 const initState = {
   entities: {
@@ -25,7 +23,7 @@ const initState = {
     },
   },
   map: [],
-  level: 0,
+  level: 4,
   width: 48,
   height: 20,
   darkness: false,

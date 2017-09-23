@@ -4,7 +4,7 @@ import { tileType } from '../constants/gameType';
 
 const Square = ({ value, posX, posY}) => {
   let tileClass = 'tile ';
-  switch (value) {
+  switch (value.type) {
     case tileType.WALL:
       tileClass += 'wall';
       break;
@@ -27,10 +27,10 @@ const Square = ({ value, posX, posY}) => {
       tileClass += 'floor enemy';
       break;
     case tileType.BOSS:
-      tileClass += 'floor boss';
+      tileClass += `floor boss ${value.name}`;
       break;      
     case tileType.DARK:
-      tileClass += 'floor dark';
+      tileClass += 'wall dark';
       break;        
     default:
       break;
@@ -42,7 +42,7 @@ const Square = ({ value, posX, posY}) => {
 };
 
 Square.propTypes = {
-  value: PropTypes.number.isRequired,
+  value: PropTypes.object.isRequired,
   posX: PropTypes.number.isRequired,
   posY: PropTypes.number.isRequired,
 };

@@ -53,9 +53,19 @@
 .enemy:after {
   background: url('../images/sprite_marker.png') -100px 0;  
 }
-.boss:after {
+.boss0:after {
   background: url('../images/sprite_marker.png') -100px -50px;  
 }
+.boss1:after {
+  background: url('../images/sprite_marker.png') -125px -50px;  
+}
+.boss2:after {
+  background: url('../images/sprite_marker.png') -100px -75px;  
+}
+.boss3:after {
+  background: url('../images/sprite_marker.png') -125px -75px;  
+}
+
 .dark {
   opacity: 0.2;
 }

@@ -17,9 +17,9 @@ export const addEntity = (entity, location) => ({
   entity,
   location
 });
-export const removeEntity = (entity, location) => ({
+export const removeEntity = (entityName, location) => ({
   type: gameType.REMOVE_ENTITY,
-  entity
+  entityName
 });
 export const initEntity = (initState) => ({
   type: gameType.INIT_ENTITY,

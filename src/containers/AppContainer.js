@@ -2,13 +2,13 @@ import React from 'react';
 import App from '../components/App';
 import * as gameType from '../constants/gameType';
 import { connect } from 'react-redux';
-import { bindactionCreatorss } from 'redux';
 import * as actionCreators from '../actions';
 import Map from '../unit/mapCreator';
 
 class AppContainer extends React.Component {
   constructor(props) {
     super(props);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   componentWillMount() {
@@ -18,13 +18,14 @@ class AppContainer extends React.Component {
   componentDidMount() {
     console.log('did mount!');
     this.props.setupGame();
+
     window.addEventListener('keydown', this.handleKeyPress);
   }
   componentWillUnmount() {
     window.removeEventListener('keydown', this.handleKeyPress);
   }
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps:',nextProps);
+    // console.log('nextProps:',nextProps);
   }
 
 
@@ -32,16 +33,16 @@ class AppContainer extends React.Component {
     let vector = '';
     switch (e.keyCode) {
       case 37:
-        vector = {x: -1, y: 0};
-        break;
-      case 38:
         vector = {x: 0, y: -1};
         break;
+      case 38:
+        vector = {x: -1, y: 0};
+        break;
       case 39:
-        vector = {x: 1, y: 0};
+        vector = {x: 0, y: 1};
         break;
       case 40:
-        vector = {x: 0, y: 1};
+        vector = {x: 1, y: 0};
         break;
       default:
         vector = '';
@@ -58,7 +59,6 @@ class AppContainer extends React.Component {
     const { visibleBoard, entities, toggleDarkness, game, setupGame, level} = this.props;
     const player = entities.player;
     game.level = level;
-    console.log('visibleBoard:',visibleBoard);
     return (
       visibleBoard!==null && <App map={visibleBoard} player={player} game={game} restartGame={setupGame} toggleDarkness={toggleDarkness}/>
     );
@@ -76,7 +76,7 @@ const getOccupiedSpaces = ({entities}) => {
           const key = `${entity.x+i}x${entity.y+j}`;
           occupiedSpaces[key] = {
             entityType: entity.entityType,
-            entityName: name
+            entityName: `boss${i*2+j}`
           };
         }
       }      
@@ -125,12 +125,12 @@ const visibleBoard = (state) => {
     visibleBoard.push([]);
     for (let j = startY; j < endY; j += 1) {
       if(darkness && (Math.abs(i-entities.player.x) > gameType.SIGHT || Math.abs(j-entities.player.y) > gameType.SIGHT)) {
-        visibleBoard[i - startX][j - startY] = gameType.tileType.DARK;
+        visibleBoard[i - startX][j - startY] = {type:gameType.tileType.DARK, name:'dark'};
       } else {
         const entity = occupiedSpaces[`${i}x${j}`];
         visibleBoard[i - startX][j - startY] = (entity === undefined
-          ? map[i][j]
-          : entity.entityType);
+          ? {type: map[i][j], name: 'wall or floor'}
+          : {type: entity.entityType, name: entity.entityName});
       }
     }
   }
@@ -149,7 +149,6 @@ const getEmptyCoords = (getState) => {
     x = Math.floor(Math.random() * map.length);
     y = Math.floor(Math.random() * map[0].length);
     if (isEmpty(map, occupiedSpaces, x, y)) {
-      console.log(x,y,map[x][y]);
       coords = { x: x, y: y };
     }
   } while (!coords);
@@ -158,7 +157,7 @@ const getEmptyCoords = (getState) => {
 const getEmptyBossCoords = (getState) => {
   let isEmptyBoss = false, coord;
   while(!isEmptyBoss) {
-    coord = getEmptyCoords(getState());
+    coord = getEmptyCoords(getState);
     const { map } = getState();
     const occupiedSpaces = getOccupiedSpaces(getState()); 
     const {x, y} = coord;
@@ -209,7 +208,7 @@ const fillMap = (dispatch, getState) => {
   // Place boss on last (fifth) level
   if (level === 4) {
     const bossEntity = {
-      entityName: 'door',
+      entityName: 'boss',
       entityType: gameType.entityType.BOSS,
       health: 500,
       attack: 125
@@ -221,7 +220,6 @@ const fillMap = (dispatch, getState) => {
 
 const setupGame = () => {
   return (dispatch, getState) => {
-    console.log('getState():',getState());
     const mapCreator = new Map();
     const map = mapCreator.createMap();
     // dispatch(actionCreators.setMap(map)).then(
@@ -249,6 +247,7 @@ const levelUpGame = () => {
     const mapCreator = new Map();
     const map = mapCreator.createMap();
     dispatch(actionCreators.resetBoard(gameType.initEntity));
+    dispatch(actionCreators.resetMap(map));
     dispatch(actionCreators.increaseLevel());
     fillMap(dispatch, getState);;
   };
@@ -268,7 +267,7 @@ const handleMove = (vector) => {
     const occupiedSpaces = getOccupiedSpaces(getState()); 
     const player = entities.player;
     const newCoords = addVector({x: player.x, y: player.y}, vector);
-    if (newCoords.x > 0 && newCoords.y > 0 && newCoords.x < map.length &&
+    if (newCoords.x >= 0 && newCoords.y >= 0 && newCoords.x < map.length &&
         newCoords.y < map[0].length &&
         map[newCoords.x][newCoords.y] !== gameType.tileType.WALL) {
       // Tile is not a wall, determine if it contains an entity
@@ -280,16 +279,21 @@ const handleMove = (vector) => {
       }
       // handle encounters with entities
       const entityType = occupiedEntity.entityType;
-      const entityName = occupiedEntity.entityName;
+      let entityName = occupiedEntity.entityName;
+      if(entityName.startsWith('boss')) {
+        entityName = 'boss';
+      }
       const entity = entities[entityName];
       switch (entity.entityType) {
         case gameType.entityType.WEAPON:
           dispatch(actionCreators.switchWeapon(entityName, entity.attack));
+          dispatch(actionCreators.removeEntity(entityName));
           dispatch(actionCreators.move('player', vector));
           break;
         case gameType.entityType.BOSS:
         case gameType.entityType.ENEMY:
-          const playerAttack = Math.floor((Math.random() * gameType.ATTACK_VARIANCE) + entities.player.attack - gameType.ATTACK_VARIANCE);
+          const playerAttack = Math.floor((Math.random() * gameType.ATTACK_VARIANCE) + entities.player.attack);
+          // const playerAttack = Math.floor((Math.random() * gameType.ATTACK_VARIANCE) + entities.player.attack - gameType.ATTACK_VARIANCE);
           const enemyAttack = Math.floor((Math.random() * gameType.ATTACK_VARIANCE) + entity.attack - gameType.ATTACK_VARIANCE);
           // Will hit kill enemy?
           if (entity.health > playerAttack) {
@@ -308,22 +312,23 @@ const handleMove = (vector) => {
             if (entityType === gameType.entityType.BOSS) {
               // notifier
               alert('A winner is you!');
-              setupGame(dispatch, getState);
+              dispatch(setupGame());
               return;
             }
             dispatch(actionCreators.gainXp((level + 1) * gameType.ENEMY.xp));
-            if (player.toNextLevel <= 0) {
-              playerLevelUp(getState);
+            if (getState().entities.player.toNextLevel <= 0) {
+              playerLevelUp(dispatch, getState);
             }
             dispatch(actionCreators.removeEntity(entityName));
+            dispatch(actionCreators.move('player', vector));
           }
           break;
-        case 'health':
+        case gameType.entityType.ENERGY:
           dispatch(actionCreators.heal('player', entity.health));
           dispatch(actionCreators.removeEntity(entityName));
           dispatch(actionCreators.move('player', vector));
           break;
-        case 'exit':
+        case gameType.entityType.DOOR:
           dispatch(levelUpGame());
           break;
         default:
@@ -355,7 +360,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   setupGame: () => dispatch(setupGame()),
   toggleDarkness: () => dispatch(actionCreators.toggleDarkness()),
-  handleMove: () => dispatch(handleMove)
+  handleMove: (vector) => dispatch(handleMove(vector))
 });
 
 // const mergeProps = (propsFromState, propsFromDispatch) => {

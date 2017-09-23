@@ -4,9 +4,22 @@ TODO List
 - [x] Add random map
 - [x] Add NPC and player
 - [x] Add darkness
-- [ ] Player move
+- [x] Player move
 - [x] Add status bar
-- [ ] Update status bar
-- [ ] Level up
+- [x] Update status bar
+- [x] Level up
 - [ ] Add notification
 - [ ] Add sound effect
+
+## development
+
+```
+npm install
+npm run start
+```
+
+## build
+```
+npm run build
+serve -s build
+```
