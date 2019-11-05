@@ -1,5 +1,5 @@
 {
-  "name": "roguelike_dungeon_crawler_game",
+  "name": "dungeon-crawler-game",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
